@@ -1,0 +1,1 @@
+npm i -D @types/express @types/dotenv @types/bcrypt @types/jsonwebtoken
