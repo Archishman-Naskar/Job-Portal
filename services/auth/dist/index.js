@@ -54,3 +54,4 @@ initDb().then(() => {
         console.log(`Auth service is running on http://localhost:${process.env.PORT}`);
     });
 });
+// services\auth\src\index.ts

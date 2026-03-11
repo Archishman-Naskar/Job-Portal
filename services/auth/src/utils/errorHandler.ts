@@ -9,3 +9,5 @@ export default class ErrorHandler extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
+
+// services\auth\src\utils\errorHandler.ts
