@@ -1,12 +1,21 @@
-import app from './app.js';
-import dotenv from 'dotenv';
-import { sql } from './utils/db.js';
+import app from "./app.js";
+import dotenv from "dotenv";
+import { sql } from "./utils/db.js";
+import { createClient } from "redis";
 
 dotenv.config();
 
+export const redisClient = createClient({
+  url: process.env.Redis_url,
+});
 
-async function initDb(){
-  try{
+redisClient
+  .connect()
+  .then(() => console.log("connected to redis"))
+  .catch(console.error);
+
+async function initDb() {
+  try {
     await sql`
     DO $$
     BEGIN
@@ -41,7 +50,7 @@ async function initDb(){
     )
   `;
 
-  await sql`
+    await sql`
     CREATE TABLE IF NOT EXISTS user_skills(
       user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
       skill_id INTEGER NOT NULL REFERENCES skills(skill_id) ON DELETE CASCADE,
@@ -49,20 +58,19 @@ async function initDb(){
     )
   `;
 
-  console.log("✅ Database tables checked/created successfully.")
-  }
-  
-  catch(error){
-    console.log("❌ Error in intializing the database",error);
+    console.log("✅ Database tables checked/created successfully.");
+  } catch (error) {
+    console.log("❌ Error in intializing the database", error);
     process.exit(1);
   }
 }
 
-initDb().then(()=>{
-  app.listen(process.env.PORT,()=>{
-    console.log(`Auth service is running on http://localhost:${process.env.PORT}`);
+initDb().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(
+      `Auth service is running on http://localhost:${process.env.PORT}`,
+    );
   });
 });
 
 // services\auth\src\index.ts
-
