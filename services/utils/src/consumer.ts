@@ -33,8 +33,8 @@ export const startSendMailConsumer = async () => {
             port: 465,
             secure: true,
             auth: {
-              user: "rkmvndphs1387@gmail.com",
-              pass: process.env.APP_PASSWORD,
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
             },
           });
 
