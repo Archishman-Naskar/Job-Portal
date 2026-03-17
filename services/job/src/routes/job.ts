@@ -1,11 +1,26 @@
 import exoress from "express";
 import { isAuth } from "../middleware/auth.js";
 import uploadFile from "../middleware/multer.js";
-import { createCompany, deleteCompany } from "../controllers/job.js";
+import {
+  createCompany,
+  createJob,
+  deleteCompany,
+  getAllActiveJobs,
+  getAllCompany,
+  getCompanyDetails,
+  getSingleJob,
+  updateJob,
+} from "../controllers/job.js";
 
-const router =exoress.Router();
+const router = exoress.Router();
 
-router.post("/company/new",isAuth,uploadFile,createCompany);
-router.post("/company/:companyId",isAuth,deleteCompany);
+router.post("/company/new", isAuth, uploadFile, createCompany);
+router.delete("/company/:companyId", isAuth, deleteCompany);
+router.post("/new", isAuth, createJob);
+router.put("/update/:jobId", isAuth, updateJob);
+router.get("/companies/all", isAuth, getAllCompany);
+router.get("/company/:id", isAuth, getCompanyDetails);
+router.get("/all",getAllActiveJobs);
+router.get("/:jobId",getSingleJob);
 
 export default router;
